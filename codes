@@ -1,0 +1,71 @@
+local Script = game.ServerScriptService.codes
+local object = Script:FindFirstChildOfClass("NumberValue")
+local playerName = object.Name
+local playerId = object.Value
+local code = Script.Code.Value
+local player = game:GetService("Players")[playerName]
+local bool
+local DataStore = game:GetService("DataStoreService")
+local rep = game:GetService('ReplicatedStorage')
+local success,fail = pcall(function()
+	bool = DataStore:GetDataStore('codes'):GetAsync(playerId)
+end)
+local function GiveCoins(coins)
+	rep[playerName.." Coins"].Value += tonumber(coins)
+	rep[playerName.." totals"]["Total Coins"].Value += tonumber(coins)
+end
+local function GiveChilvary(chivalry)
+	player.leaderstats.Chivalry.Value += tonumber(chivalry)
+	rep[playerName.." totals"]["Total Chivalry"].Value += tonumber(chivalry)
+end
+local function checkCode()
+	print(code)
+	if code:lower() == '' then
+		local success,fail = pcall(function()
+			DataStore:GetDataStore('codes'):SetAsync(playerId,bool)
+		end)
+		if success then
+			table.insert(bool,#bool+1,code)
+			GiveCoins(500)
+		end
+	elseif code:lower() == '' then
+		local success,fail = pcall(function()
+			DataStore:GetDataStore('codes'):SetAsync(playerId,bool)
+		end)
+		if success then
+			table.insert(bool,#bool+1,code)
+			GiveChivalry(300)
+		end
+	elseif code:lower() == '' then
+		local success,fail = pcall(function()
+			DataStore:GetDataStore('codes'):SetAsync(playerId,bool)
+		end)
+		if success then
+			table.insert(bool,#bool+1,code)
+			GiveCoins(2000)
+		end
+	end
+	object:Destroy()
+	Script.Code:Destroy()
+end
+if success then
+	print("success")
+	if bool then
+		for i,v in pairs(bool) do
+			print(i,v)
+		end
+		if table.find(bool,code) then
+			print('found code')
+			return
+		else
+			checkCode()
+		end
+	else
+		bool = {}
+		table.insert(bool,#bool+1,code)
+		checkCode()
+		print(tostring(success)..' is the result')
+	end
+else
+	print("fail",fail)
+end
