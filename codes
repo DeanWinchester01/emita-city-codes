@@ -20,7 +20,7 @@ local function GiveChilvary(chivalry)
 end
 local function checkCode()
 	print(code)
-	if code:lower() == '' then
+	if code:lower() == 'code1' then
 		local success,fail = pcall(function()
 			DataStore:GetDataStore('codes'):SetAsync(playerId,bool)
 		end)
@@ -28,7 +28,7 @@ local function checkCode()
 			table.insert(bool,#bool+1,code)
 			GiveCoins(500)
 		end
-	elseif code:lower() == '' then
+	elseif code:lower() == 'code2' then
 		local success,fail = pcall(function()
 			DataStore:GetDataStore('codes'):SetAsync(playerId,bool)
 		end)
@@ -36,7 +36,7 @@ local function checkCode()
 			table.insert(bool,#bool+1,code)
 			GiveChivalry(300)
 		end
-	elseif code:lower() == '' then
+	elseif code:lower() == 'code3' then
 		local success,fail = pcall(function()
 			DataStore:GetDataStore('codes'):SetAsync(playerId,bool)
 		end)
